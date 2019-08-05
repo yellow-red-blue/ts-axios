@@ -21,3 +21,22 @@ export const processHeaders = (headers: any, data: any): any => {
   console.log(headers)
   return headers
 }
+
+export const parseHeader = (headers: string): any => {
+  let parsed = Object.create(null)
+  if (!headers) {
+    return parsed
+  }
+  headers.split('\r\n').forEach(line => {
+    let [key, value] = line.split(':')
+    key = key.trim().toLowerCase()
+    if (!key) {
+      return
+    }
+    if (!value) {
+      return 
+    }
+    parsed[key] = value
+  })
+  return parsed
+}
