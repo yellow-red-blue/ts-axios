@@ -35,4 +35,6 @@ axios({
   timeout: 2000
 }).then((res) => {
   console.log(res)
-}).catch(err => { })
+}).catch(err => {
+  console.log(err)
+})
