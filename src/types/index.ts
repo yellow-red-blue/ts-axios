@@ -1,4 +1,4 @@
-import { LoDashExplicitNumberArrayWrapper } from "lodash";
+
 import { InterceptorManager } from "../core/interceptorManager";
 
 export type Method = 'get' | 'GET'
@@ -15,11 +15,15 @@ export interface AxiosRequestConfig {
   data?: any
   params?: any
   headers?: any
-  responseType?: XMLHttpRequestResponseType,
+  responseType?: XMLHttpRequestResponseType
   timeout?: number
+  transformRequest?: AxiosTransformer | AxiosTransformer[]
+  transfromResponse?: AxiosTransformer | AxiosTransformer[]
   [propName: string]: any
 }
-
+export interface AxiosTransformer {
+  (data: any, headers?: any): any
+}
 export interface AxiosResponse<T = any> {
   data: T
   status: number
@@ -61,6 +65,9 @@ export interface AxiosInstance extends Axios {
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
+export interface AxiosStatic extends AxiosInstance {
+  create(config?: AxiosRequestConfig): AxiosInstance
+}
 export interface AxiosInterceptorManager<T> {
   use(resolve: ResolvedFn<T>, rejected?: RejectedFn): number
   eject(id: number): void
